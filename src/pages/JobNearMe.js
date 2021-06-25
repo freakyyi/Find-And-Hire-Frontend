@@ -26,10 +26,10 @@ class JobNearMe extends Component {
     });
   }
 
-  getResults = async () => {
+  getScrapedResults = async () => {
     try {
       if (this.state.keywords !== "" || this.state.selectedLocation !== "") {
-        let results = await requests.getResults(
+        let results = await requests.getScrapedResults(
           this.state.keywords,
           this.state.selectedLocation
         );
@@ -41,6 +41,18 @@ class JobNearMe extends Component {
       console.log(error);
     }
   };
+
+  showResults = ()=> {
+    if( this.state.keywords === "" || this.state.selectedLocation === ""){
+      return(
+        <>
+        <p style={{ marginLeft :"220px", fontWeight :"bold", marginBottom:"20px"}}>Enter your keyword and Select the location 
+        & Wait till we find you the jobs out there on the internet :)</p>
+        </>
+      )
+    }
+   
+  }
   render() {
     return (
       <>
@@ -96,7 +108,7 @@ class JobNearMe extends Component {
                       </div>
                       <div class="col-lg-1 col-md-1 col-xs-12">
                         <button
-                          onClick={this.getResults}
+                          onClick={this.getScrapedResults}
                           type="button"
                           class="button"
                         >
@@ -110,8 +122,9 @@ class JobNearMe extends Component {
             </div>
           </div>
         </div>
-
+          
         <section class="job-detail section pt-5">
+        {this.showResults()}
           <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">

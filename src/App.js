@@ -38,7 +38,7 @@ function App() {
                 <Route path="/jobs-near-me" component={JobNearMe} />
                 <Route path="/cv-resume" component={Resume} />
                 <Route path="/post-job-form" component={JobPostForm} />
-                <Route path="/job-planes" component={JobPlanes} />
+                <Route path="/job-plans" component={JobPlanes} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/company_register" component={RegisterCompany} />

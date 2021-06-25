@@ -88,10 +88,10 @@ class JobPlanes extends Component {
                     </div>
                 </div>
 
-                <div class="col-12 text-center mt-2 mb-3">
+                {/* <div class="col-12 text-center mt-2 mb-3">
                     <Link to="quiz" style={{background: "#55BC7E"}} class="btn btn-common">Continue & Post
                         </Link>
-                </div> 
+                </div>  */}
 
             </>
         );
