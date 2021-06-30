@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 const requests = require("../axios/requests");
-const ls = require('local-storage')
+const ls = require("local-storage");
 
 class Login extends Component {
   state = {
@@ -28,20 +28,25 @@ class Login extends Component {
           this.state.email,
           this.state.password
         );
-            ls.set("id", results.data.user._id)
-            ls.set("token", results.data.token)
-            ls.set("role",results.data.user.role)
+        if (results === undefined || results instanceof Error) {
+          document.getElementById("error").style.display = "block";
+        } else {
+          document.getElementById("noerror").style.display = "block";
+          ls.set("id", results.data.user._id);
+          ls.set("token", results.data.token);
+          ls.set("role", results.data.user.role);
 
           this.setState({
             users: results,
-
           });
           const loggedInUser = ls.get("user");
           if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser);
             ls.set(foundUser);
           }
-        window.location.href = '/'
+          window.location.href = "/";
+
+        }
       }
     } catch (error) {
       console.log(error);
@@ -92,6 +97,12 @@ class Login extends Component {
                     }}
                   />
                 </div>
+                <p id="error" style={{ display: "none" }}>
+                  Invalid Email Or Password
+                </p>
+                <p id="noerror" style={{ display: "none" }}>
+                  Logging In
+                </p>
                 <button class="btn btn-common log-btn" onClick={this.loginUser}>
                   Login
                 </button>

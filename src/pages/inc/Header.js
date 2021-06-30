@@ -21,9 +21,17 @@ class header extends Component {
         this.state.token !== undefined
       ) {
         let results = await requests.getUser(this.state.id);
-        this.setState({
-          firstname: results.data.roleDetails.firstname,
-        });
+        if(results.data.roleDetails.firstname=== null || results.data.roleDetails.firstname === undefined){
+          this.setState({
+            firstname :"User"
+          });
+        }
+        else {
+          this.setState({
+            firstname: results.data.roleDetails.firstname,
+          });
+        }
+        
       } else {
         console.log("its null");
       }

@@ -1,60 +1,87 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+const ls = require('local-storage')
 class Home extends React.Component {
+    state = {
+        id : ls.get("id"),
+        token  : ls.get('token'),
+        role : ls.get('role')
+    }
+
+    sectionHeaderVisibility = ()=>{
+        if (
+            this.state.id !== null ||
+            this.state.token !== null ||
+            this.state.id !== undefined ||
+            this.state.token !== undefined 
+          ) {
+              if(this.state.role === "seeker"){
+                  return (
+                    <>
+                    <section class="category section bg-gray">
+                        <div class="container">
+                            <div class="section-header">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 f-category">
+                                    <Link to="Register">
+                                        <div class="icon bg-color-1">
+                                            <i class="lni-home"></i>
+                                        </div>
+                                        <h3>Account</h3>
+                                        <p>First you've to create an
+                                            Account in here</p>
+                                    </Link>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-xs-12 f-category">
+                                    <Link to="cv-resume">
+                                        <div class="icon bg-color-2">
+                                            <i class="lni-world"></i>
+                                        </div>
+                                        <h3>CV/Resume</h3>
+                                        <p>For a job you have to make
+                                            your CV or resume</p>
+                                    </Link>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-xs-12 f-category">
+                                    <Link to="category">
+                                        <div class="icon bg-color-3">
+                                            <i class="lni-book"></i>
+                                        </div>
+                                        <h3>Quick Jobs </h3>
+                                        <p>Find your best job by our detailed
+                                            job search feature.</p>
+                                    </Link>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-xs-12 f-category">
+                                    <Link to="category">
+                                        <div class="icon bg-color-5">
+                                            <i class="lni-brush"></i>
+                                        </div>
+                                        <h3>Apply them</h3>
+                                        <p>Finally your apply to the job of your
+                                            findings and enjoy.</p>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    </>
+                  )
+                
+              }
+
+        }    
+    }
+
     render() {
         return (
+
+            
             <>
-                <section class="category section bg-gray">
-                    <div class="container">
-                        <div class="section-header">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                                <Link to="category">
-                                    <div class="icon bg-color-1">
-                                        <i class="lni-home"></i>
-                                    </div>
-                                    <h3>Account</h3>
-                                    <p>First you've to create an
-                                        Account in here</p>
-                                </Link>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                                <Link to="category">
-                                    <div class="icon bg-color-2">
-                                        <i class="lni-world"></i>
-                                    </div>
-                                    <h3>CV/Resume</h3>
-                                    <p>For a job you have to make
-                                        your CV or resume</p>
-                                </Link>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                                <Link to="category">
-                                    <div class="icon bg-color-3">
-                                        <i class="lni-book"></i>
-                                    </div>
-                                    <h3>Quick Jobs </h3>
-                                    <p>Find your best job by our detailed
-                                        job search feature.</p>
-                                </Link>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                                <Link to="category">
-                                    <div class="icon bg-color-5">
-                                        <i class="lni-brush"></i>
-                                    </div>
-                                    <h3>Apply them</h3>
-                                    <p>Finally your apply to the job of your
-                                        findings and enjoy.</p>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                
 
-
+            {this.sectionHeaderVisibility()}
                 <section id="featured" class="section">
                     <div class="container">
                         <div class="section-header">
@@ -77,86 +104,7 @@ class Home extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img2.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Graphic Designer</Link></h3>
-                                        <p class="brand">Hunter Inc.</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="part-time">Part Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img3.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Managing Director</Link></h3>
-                                        <p class="brand">MagNews</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img4.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Software Engineer</Link></h3>
-                                        <p class="brand">AmazeSoft</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img5.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Graphic Designer</Link></h3>
-                                        <p class="brand">Bingo</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="part-time">Part Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img6.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Managing Director</Link></h3>
-                                        <p class="brand">MagNews</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-12 text-center mt-4">
                                 <Link to="category" class="btn btn-common">Browse All Jobs</Link>
                             </div>
@@ -187,86 +135,7 @@ class Home extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img2.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Graphic Designer</Link></h3>
-                                        <p class="brand">Hunter Inc.</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="part-time">Part Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img3.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Managing Director</Link></h3>
-                                        <p class="brand">MagNews</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img4.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Software Engineer</Link></h3>
-                                        <p class="brand">AmazeSoft</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img5.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Graphic Designer</Link></h3>
-                                        <p class="brand">Bingo</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="part-time">Part Time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-xs-12">
-                                <div class="job-featured">
-                                    <div class="icon">
-                                        <img src="assets/img/features/img6.png" alt=""/>
-                                    </div>
-                                    <div class="content">
-                                        <h3><Link to="jobs-near-me">Managing Director</Link></h3>
-                                        <p class="brand">MagNews</p>
-                                        <div class="tags">
-                                            <span><i class="lni-map-marker"></i> New York</span>
-                                            <span><i class="lni-user"></i>John Smith</span>
-                                        </div>
-                                        <span class="full-time">Full Time</span>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-12 text-center mt-4">
                                 <Link to="category" class="btn btn-common">Browse All Jobs</Link>
                             </div>

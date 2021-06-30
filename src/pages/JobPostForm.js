@@ -9,14 +9,12 @@ class JobPostForm extends Component {
     selectedHires: "",
     company: "",
     title: "",
-    address: "",
-    category: "",
     jobPrimer: "",
     contractType: "",
     lowerSalary: "",
     upperSalary: "",
     description: "",
-    skills: [],
+    skills: '',
     jobs: [],
     id: ls.get("id"),
     token: ls.get("token"),
@@ -52,11 +50,6 @@ class JobPostForm extends Component {
       description: e.target.value,
     });
   }
-  setSkills(e) {
-    this.setState({
-      skills: e.target.value,
-    });
-  }
 
   selectCategory(e) {
     if (e.target.value === 0) {
@@ -71,15 +64,21 @@ class JobPostForm extends Component {
   }
 
   selectHires(e) {
-    if (e.target.value === 0) {
+    if (e.target.value !== 0) {
       this.setState({
-        selectedHires: "",
+        selectedHires: e.target.value,
+        
       });
     } else {
       this.setState({
-        selectedHires: e.target.value,
+        selectedHires: "N/A",
       });
     }
+  }
+  setSkills(e){
+    this.setState({
+      skills : e.target.value
+    })
   }
 
   selectJobPrimer(e) {
@@ -123,22 +122,28 @@ class JobPostForm extends Component {
         this.state.company !== "" ||
         this.state.category !== "" ||
         this.state.title !== "" ||
-        this.state.selectLocation !== ""
+        this.state.selectedLocation !== ""
       ) {
         console.log("im in post job");
+        let skills =this.state.skills.split(' ')
+        
         let results = await requests.postJob(
           this.state.company,
           this.state.title,
-          this.state.category,
-          this.state.selectLocation,
+          this.state.selectedCategory,
+          this.state.selectedLocation,
           this.state.jobPrimer,
           this.state.selectedHires,
           this.state.contractType,
-          this.state.lowerSalary,
           this.state.upperSalary,
+          this.state.lowerSalary,
           this.state.description,
-          this.state.skills
+          skills
         );
+      
+         
+        
+      
 
         window.location.href = "/category";
       } else {
@@ -151,12 +156,8 @@ class JobPostForm extends Component {
       console.log(error);
     }
   };
-  // componentDidMount() {
-  //   this.loggedIn()
-  //   this.postJob()
 
-  // }
-  loggedIn = () => {
+  loggedIn =  () => {
     if (
       this.state.id !== null ||
       this.state.token !== null ||
@@ -230,34 +231,40 @@ class JobPostForm extends Component {
                                   }}
                                 >
                                   <option value={0}>Categories</option>
-                                  <option value="islamabad">
+                                  <option value="Information Technology">
                                     Information Technology
                                   </option>
-                                  <option value="lahore">
+                                  <option value="Edcuation">
                                     Edcuation/Training
                                   </option>
-                                  <option value="rawalpindi">
+                                  <option value="Consultants">
                                     Consultants
                                   </option>
-                                  <option value="sialkot">Call Centre</option>
-                                  <option value="faislabad">
+                                  <option value="Call Centre">
+                                    Call Centre
+                                  </option>
+                                  <option value="Accounting">
                                     Accounting / Taxation
                                   </option>
-                                  <option value="multan">Electronics</option>
-                                  <option value="peshawar">
+                                  <option value="Electronics">
+                                    Electronics
+                                  </option>
+                                  <option value="Health And Fitness">
                                     Health And Fitness
                                   </option>
-                                  <option value="quetta">Engineering</option>
-                                  <option value="sargodha">
+                                  <option value="Engineering">
+                                    Engineering
+                                  </option>
+                                  <option value="Media">
                                     Media/Communications
                                   </option>
-                                  <option value="abbottabad">
+                                  <option value="Real Estate">
                                     Real Estate/Property
                                   </option>
-                                  <option value="bhawalnagar">
+                                  <option value="Banking">
                                     Banking/Financial Services
                                   </option>
-                                  <option value="hariPur">
+                                  <option value="Advertising">
                                     Advertising / PR
                                   </option>
                                 </select>
@@ -342,9 +349,20 @@ class JobPostForm extends Component {
                             this.selectJobPrimer(e);
                           }}
                         >
-                          <input  class="col-md-4" type="radio" value="Yes" name="jobPrimer" />{" "}
+                          <input
+                            class="col-md-4"
+                            type="radio"
+                            value="Yes"
+                            name="jobPrimer"
+                          />{" "}
                           Yes
-                          <input  class="col-md-4" type="radio" value="No" name="jobPrimer" /> No
+                          <input
+                            class="col-md-4"
+                            type="radio"
+                            value="No"
+                            name="jobPrimer"
+                          />{" "}
+                          No
                         </div>
                       </div>
 
@@ -376,10 +394,10 @@ class JobPostForm extends Component {
                               }}
                             >
                               <option value={0}>Specify</option>
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={5 - 10}>5-10</option>
+                              <option value={"1"}>1</option>
+                              <option value={"2"}>2</option>
+                              <option value={"3"}>3</option>
+                              <option value={"5-10"}>5-10</option>
                             </select>
                           </label>
                         </div>
@@ -398,10 +416,15 @@ class JobPostForm extends Component {
                               this.selectContractType(e);
                             }}
                           >
-                            <input class="col-md-4" type="radio" value="Temporarily" name="contractType" />{" "}
-                            Temporarily 
                             <input
-                             class="col-md-4"
+                              class="col-md-4"
+                              type="radio"
+                              value="Temporarily"
+                              name="contractType"
+                            />{" "}
+                            Temporarily
+                            <input
+                              class="col-md-4"
                               type="radio"
                               value="Internship"
                               name="contractType"
@@ -504,6 +527,7 @@ class JobPostForm extends Component {
                           Skills
                         </label>
                         <input
+                        
                           type="text"
                           class="form-control"
                           style={{
@@ -511,7 +535,9 @@ class JobPostForm extends Component {
                             background: "none",
                           }}
                           onChange={(e) => {
-                            this.setSkills(e);
+                             this.setSkills(e);
+                             
+                            
                           }}
                           placeholder=""
                         />
@@ -521,10 +547,7 @@ class JobPostForm extends Component {
                         <button
                           class="btn btn-common"
                           type="button"
-                          onClick={
-                             this.postJob}
-                          
-                            
+                          onClick={this.postJob}
                         >
                           Post The Job
                         </button>
@@ -556,6 +579,11 @@ class JobPostForm extends Component {
       }
     }
   };
+  // componentDidMount() {
+
+  //   this.loggedIn()
+
+  // }
 
   render() {
     return (
@@ -575,9 +603,8 @@ class JobPostForm extends Component {
           </div>
         </div>
         <div></div>
-        {
-          this.loggedIn()}
-        
+        {this.loggedIn()
+}
       </>
     );
   }
