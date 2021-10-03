@@ -12,14 +12,17 @@ class Category extends React.Component {
     // description: "",
     // skills: "",
     jobs: [],
+    filteredJobs: [],
     keywords: "",
     selectedLocation: "",
   };
 
   setKeywords(e) {
+
     this.setState({
       keywords: e.target.value,
     });
+    
   }
 
   selectLocation(e) {
@@ -34,11 +37,15 @@ class Category extends React.Component {
     }
   }
 
+
+
+  
+
   // formatSkills(data){
   //   let a = ''
   //   for (let i = 0; i < data.length; i++) {
   //   a= a.concat(data[i].concat(','))
-      
+
   //   }
   // }
 
@@ -53,7 +60,9 @@ class Category extends React.Component {
         let results = await requests.getJobs();
         this.setState({
           jobs: results,
+          filteredJobs: results,
         });
+        console.log("jaabs",this.state.filteredJobs)
       } else if (
         this.state.keywords !== "" ||
         this.state.selectedLocation !== "" ||
@@ -66,6 +75,31 @@ class Category extends React.Component {
       console.log(error);
     }
   };
+  componentDidMount() {
+    this.getJobs();
+  }
+  filterResults =() =>  {
+    
+    let keywords = this.state.keywords
+    var newArray = this.state.filteredJobs.filter(function (el) {
+      console.log("el is : ",el.title)
+      console.log(el.title === keywords)
+      return el.title === keywords
+      // if (el.title === keywords) {
+      //   return el
+      // }else{
+      //   return
+      // }
+      
+      
+    });
+    this.setState({
+      filteredjobs: newArray,
+    }); 
+
+    console.log("filteredd",newArray)
+  }
+
 
   render() {
     return (
@@ -86,6 +120,9 @@ class Category extends React.Component {
                             className="form-control"
                             type="text"
                             placeholder="Job title or keywords"
+                            onChange={(e) => {
+                              this.setKeywords(e);
+                            }}
                           />
                         </div>
                       </div>
@@ -122,12 +159,9 @@ class Category extends React.Component {
                         </div>
                       </div>
                       <div className="col-lg-1 col-md-1 col-xs-12">
-                        <button
-                          type="button"
-                          className="button"
-                          onClick={this.getJobs}
-                        >
+                        <button type="button" className="button" onClick = {this.filterResults}>
                           <i className="lni-search"></i>
+
                         </button>
                       </div>
                     </div>
@@ -479,7 +513,7 @@ class Category extends React.Component {
             </div>
 
             <div className="col-lg-8">
-              {this.state.jobs.map((data, fields) => {
+              {this.state.filteredJobs.map((data, fields) => {
                 return (
                   <>
                     <div
@@ -503,7 +537,10 @@ class Category extends React.Component {
                             />
                           </span>
                         </div>
-                        <div className="col-md-8" style = {{marginRight:"120px"}}>
+                        <div
+                          className="col-md-8"
+                          style={{ marginRight: "120px" }}
+                        >
                           <p
                             className="mb-0"
                             style={{ color: "#37383D", fontSize: "16px" }}
@@ -514,7 +551,7 @@ class Category extends React.Component {
                             for=""
                             style={{ color: "#37383D", marginRight: "10px" }}
                           >
-                            {data.createdAt.slice(0,10)}
+                            {data.createdAt.slice(0, 10)}
                           </label>
                           <label
                             for=""
@@ -545,7 +582,11 @@ class Category extends React.Component {
                         <div className="col-md-1 text-right">
                           <p
                             className="mb-0"
-                            style={{ color: "#37383D", fontSize: "16px" ,float:"left"}}
+                            style={{
+                              color: "#37383D",
+                              fontSize: "16px",
+                              float: "left",
+                            }}
                           >
                             {data.upperSalary}
                           </p>
@@ -561,30 +602,33 @@ class Category extends React.Component {
 
                       <div class="row">
                         <div className="pl-3 pr-2">
-                          <p style={{ color: "#37383D", fontSize: "16px" , marginRight:"0px"}}>
+                          <p
+                            style={{
+                              color: "#37383D",
+                              fontSize: "16px",
+                              marginRight: "0px",
+                            }}
+                          >
                             Skills:
                           </p>
                         </div>
                         <div>
-                          
-                            {data.skills.map((data,fields) =>{
-                              return(
-                                <Link
-                            style={{
-                              background: "#55BC7E",
-                              color: "white",
-                              borderRadius: "5px;",
-                              paddingTop:"4px",
-                              marginRight : "5px",
-                            
-                            }}
-                            className="p-1"
-                          >
+                          {data.skills.map((data, fields) => {
+                            return (
+                              <Link
+                                style={{
+                                  background: "#55BC7E",
+                                  color: "white",
+                                  borderRadius: "5px;",
+                                  paddingTop: "4px",
+                                  marginRight: "5px",
+                                }}
+                                className="p-1"
+                              >
                                 {data}
-                                </Link>
-                              )
-                            })}
-                          
+                              </Link>
+                            );
+                          })}
                         </div>
                         <button type="button" class="apply">
                           Apply

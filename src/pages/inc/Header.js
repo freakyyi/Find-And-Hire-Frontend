@@ -111,8 +111,8 @@ class header extends Component {
             </li>
             <div class="dropdown-content">
             <li >
-            <Link  to="/view-profile">View Profile</Link>
-              <Link to="/update-profile">Edit Profile</Link>
+            <Link  to="/view-profile">Edit Or View Profile</Link>
+              <Link to="/cv_preview">View CV</Link>
               <Link to="/" onClick={this.logout}>
                 Logout
               </Link>
@@ -135,13 +135,22 @@ class header extends Component {
               Post a Job
             </Link>
           </li>
+          <li class="nav-item dropdown">
+            <Link
+              class="nav-link dropdown-toggle"
+              to="error"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              View Applications
+            </Link>
+          </li>
           <div class="dropdown">
             <li class="button-group">
               <Link class="button btn btn-common">{this.state.firstname}</Link>
             </li>
             <div class="dropdown-content">
-              <Link to="/view-profile">View Profile</Link>
-              <Link to="/update-profile">Edit Profile</Link>
+              <Link to="/view-profile">Edit Or View Profile</Link>
               <Link to="/" onClick={this.logout}>
                 Logout
               </Link>

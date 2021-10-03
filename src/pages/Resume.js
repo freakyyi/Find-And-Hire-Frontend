@@ -25,6 +25,7 @@ class Resume extends Component {
     startDate: "",
     endDate: "",
     education: [],
+    skills: [],
     summary: "",
     id: ls.get("id"),
     token: ls.get("token"),
@@ -184,6 +185,11 @@ class Resume extends Component {
       email: e.target.value,
     });
   }
+  setSkills(e){
+    this.setState({
+      skills : e.target.value
+    })
+  }
 
   setSummary(e) {
     this.setState({
@@ -207,6 +213,7 @@ class Resume extends Component {
         this.state.summary !== ""
         
       ) {
+        let skills =this.state.skills.split(',')
         let results = await requests.createCV(
           this.state.experience,
           this.state.firstName,
@@ -219,9 +226,10 @@ class Resume extends Component {
           this.state.email,
           this.state.education,
           this.state.workHistory,
+          skills,
           this.state.summary
         );
-        window.location.href = "/";
+        window.location.href = "/cv_preview";
       } else {
         return console.log("Please fill in the required details");
         // <>
@@ -847,6 +855,29 @@ class Resume extends Component {
                           })}
                         
                       </table>
+                      <div class="form-group">
+                        <label
+                          style={{ color: "#000000" }}
+                          class="control-label"
+                        >
+                          Skills [ Separated By Comma ]
+                        </label>
+                        <input
+                        
+                          type="text"
+                          class="form-control"
+                          style={{
+                            border: "1px solid #55BC7E",
+                            background: "none",
+                          }}
+                          onChange={(e) => {
+                             this.setSkills(e);
+                             
+                            
+                          }}
+                          placeholder=""
+                        />
+                      </div>
                       <div class="inner-header pt-3">
                         <h3
                           class="text-center"

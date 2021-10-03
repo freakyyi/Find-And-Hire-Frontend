@@ -8,7 +8,7 @@ class Error extends Component {
                     <h1 style={{fontSize:"200px"}}>
                         404
                     </h1>
-                    <h1>Page Not Founded</h1>
+                    <h1>Page Not Found</h1>
                 </center>
             </div>
         );

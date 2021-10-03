@@ -125,7 +125,7 @@ class JobPostForm extends Component {
         this.state.selectedLocation !== ""
       ) {
         console.log("im in post job");
-        let skills =this.state.skills.split(' ')
+        let skills =this.state.skills.split(',')
         
         let results = await requests.postJob(
           this.state.company,
@@ -524,7 +524,7 @@ class JobPostForm extends Component {
                           style={{ color: "#000000" }}
                           class="control-label"
                         >
-                          Skills
+                          Skills [ Separated By Comma ]
                         </label>
                         <input
                         
