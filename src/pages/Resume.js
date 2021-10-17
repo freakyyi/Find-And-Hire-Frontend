@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+// import Popup from './PopUp';
+
 const requests = require("../axios/requests");
 const ls = require("local-storage");
 class Resume extends Component {
@@ -30,8 +32,14 @@ class Resume extends Component {
     id: ls.get("id"),
     token: ls.get("token"),
     role: ls.get("role"),
+    cv : ls.get("cvId")
+    
   };
 
+  
+  // componentDidMount(){
+  //     this.loggedIn
+  // }
 
   selectExperience(e) {
     if (e.target.value === "zeroToThree") {
@@ -198,6 +206,8 @@ class Resume extends Component {
   }
   postCV = async () => {
     try {
+      let results;
+    
       if (
         this.state.experience !== "" ||
         this.state.firstName !== "" ||
@@ -210,11 +220,12 @@ class Resume extends Component {
         this.state.email !== "" ||
         this.state.workHistory !== "" ||
         this.state.education !== "" ||
+        this.state.skills !== "" ||
         this.state.summary !== ""
         
       ) {
-        let skills =this.state.skills.split(',')
-        let results = await requests.createCV(
+        // let skills =this.state.skills.split(',')
+         results = await requests.createCV(
           this.state.experience,
           this.state.firstName,
           this.state.lastName,
@@ -226,18 +237,36 @@ class Resume extends Component {
           this.state.email,
           this.state.education,
           this.state.workHistory,
-          skills,
+          this.state.skills,
           this.state.summary
         );
-        window.location.href = "/cv_preview";
-      } else {
-        return console.log("Please fill in the required details");
-        // <>
-        // <h4>Please fill in the required details</h4>
-        // </>
+        if (
+          results !== null
+          
+        ) { 
+          window.location.href = "/cv_preview";
+
+        }
+        else if (results.status === "403"){
+          console.log("cv already exists")
+        }
+        // else if(results === 500){
+        //   console.log("you already have a CV")
+        // }
+        else {
+           document.getElementById("error").style.display = "block";
+           console.log("Please fill in the required details");
+          //  console.log("results when there was no submission " ,results)
+        }
+        
+       
       }
+      
+     
+      
+      
     } catch (error) {
-      console.log(error);
+      console.log("Error is in total post CV: " + error);
     }
   };
 
@@ -251,7 +280,7 @@ class Resume extends Component {
       this.state.role !== undefined ||
       this.state.role !== "recruiter"
     ) {
-      if (this.state.role === "seeker") {
+      if (this.state.role === "seeker" && this.state.cv === null) {
         return (
           <>
             <section class="job-detail section pt-5">
@@ -282,6 +311,7 @@ class Resume extends Component {
                           type="radio"
                           value="zeroToThree"
                           name="jobPrimer"
+                          
                         />{" "}
                         0-3 Years
                         <input
@@ -326,6 +356,7 @@ class Resume extends Component {
                               First Name
                             </label>
                             <input
+                            id = "firstname"
                               type="text"
                               class="form-control"
                               style={{
@@ -906,6 +937,9 @@ class Resume extends Component {
                         ></textarea>
                       </div>
                       <div class="col-12 text-center mt-4">
+                      <p id="error" style={{ display: "none" }}>
+                  Please Fill in the required details
+                </p>
                         <Link
                           style={{ background: "#55BC7E" }}
                           class="btn btn-common"
@@ -922,7 +956,25 @@ class Resume extends Component {
             </section>
           </>
         );
-      } else {
+      } else if(this.state.role === "seeker" && this.state.cv !== null) {
+        return (
+          <>
+            <div >
+              <p
+                style={{
+                  marginBottom: "115px",
+                  textAlign: "center",
+                  marginTop: "106px",
+                  fontSize : "25px"
+                }}
+              >
+                CV already Exists, You can Update it , instead of creating a new one
+              </p>
+            </div>
+          </>
+        );
+      }
+      else {
         return (
           <>
             <div >
@@ -941,6 +993,13 @@ class Resume extends Component {
         );
       }
     }
+    // else {
+    //   return (
+    //     <>
+    // <p>You already have a CV</p>
+    //     </>
+    //   )
+    // }
   };
   render() {
     return (

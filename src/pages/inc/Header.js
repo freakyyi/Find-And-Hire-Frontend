@@ -69,6 +69,17 @@ class header extends Component {
     ) {
       return (
         <>
+        <li class="nav-item dropdown">
+                      <Link
+                        class="nav-link dropdown-toggle"
+                        to="category"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Jobs On HAF
+                      </Link>
+                    </li>
+         <li class="nav-item dropdown"></li>
          <li class="nav-item dropdown">
             <Link
               class="nav-link dropdown-toggle"
@@ -84,11 +95,22 @@ class header extends Component {
               SignUp Or Login
             </Link>
           </li>
+          
         </>
       );
     } else if (this.state.role === "seeker") {
       return (
         <>
+         <li class="nav-item dropdown">
+                      <Link
+                        class="nav-link dropdown-toggle"
+                        to="category"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Jobs On HAF
+                      </Link>
+                    </li>
          <li class="nav-item dropdown">
             <Link
               class="nav-link dropdown-toggle"
@@ -111,7 +133,7 @@ class header extends Component {
             </li>
             <div class="dropdown-content">
             <li >
-            <Link  to="/view-profile">Edit Or View Profile</Link>
+            <Link  to="/view-profile">Edit Profile</Link>
               <Link to="/cv_preview">View CV</Link>
               <Link to="/" onClick={this.logout}>
                 Logout
@@ -150,7 +172,7 @@ class header extends Component {
               <Link class="button btn btn-common">{this.state.firstname}</Link>
             </li>
             <div class="dropdown-content">
-              <Link to="/view-profile">Edit Or View Profile</Link>
+              <Link to="/view-profile">Edit Profile</Link>
               <Link to="/" onClick={this.logout}>
                 Logout
               </Link>
@@ -159,13 +181,7 @@ class header extends Component {
         </>
       );
     }
-    else {
-      return(
-        <>
- 
-        </>
-      )
-    }
+   
   };
   render() {
     return (
@@ -207,16 +223,7 @@ class header extends Component {
                       </Link>
                     </li>
                     
-                    <li class="nav-item dropdown">
-                      <Link
-                        class="nav-link dropdown-toggle"
-                        to="category"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Jobs On HAF
-                      </Link>
-                    </li>
+                   
 
                     <li class="nav-item dropdown">
                       <Link

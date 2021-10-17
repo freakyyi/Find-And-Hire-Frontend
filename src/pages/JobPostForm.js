@@ -141,11 +141,20 @@ class JobPostForm extends Component {
           skills
         );
       
-         
+        if (
+          results !== null
+          
+        ) { 
+          window.location.href = "/category";
+        }
+        else {
+          document.getElementById("error").style.display = "block";
+           console.log("Please fill in the required details");
+                 
+        }
         
       
 
-        window.location.href = "/category";
       } else {
         return console.log("Please fill in the required details");
         // <>
@@ -544,10 +553,14 @@ class JobPostForm extends Component {
                       </div>
 
                       <div class="col-12 text-center mt-4">
+                      <p id="error" style={{ display: "none" }}>
+                  Please Fill in the required details
+                </p>
                         <button
                           class="btn btn-common"
                           type="button"
                           onClick={this.postJob}
+                          
                         >
                           Post The Job
                         </button>

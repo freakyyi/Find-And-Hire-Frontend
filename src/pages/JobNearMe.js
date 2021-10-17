@@ -28,31 +28,46 @@ class JobNearMe extends Component {
 
   getScrapedResults = async () => {
     try {
-      if (this.state.keywords !== "" || this.state.selectedLocation !== "") {
+      if (this.state.keywords !== "" && this.state.selectedLocation !== "") {
         let results = await requests.getScrapedResults(
           this.state.keywords,
           this.state.selectedLocation
         );
-        this.setState({
-          jobs: results,
-        });
+
+        if (results === null || results === "" || results === undefined || results.length === 0) {
+          console.log("")
+          document.getElementById("Nojob").style.display = "block";
+          document.getElementById("noerror").style.display = "none";
+          document.getElementById("error").style.display = "none";
+        }
+        else {
+          console.log('Here after getting a result')
+          this.setState({
+            jobs: results,
+          });
+          document.getElementById("noerror").style.display = "block";
+          document.getElementById("Nojob").style.display = "none";
+          document.getElementById("error").style.display = "none";
+        }
+       
+
+        
+      } else if (
+        this.state.keywords === "" ||
+        this.state.keywords === null ||
+        this.state.selectedLocation === "" ||
+        this.state.selectedLocation === null 
+      ) {
+        console.log("im in else if");
+        document.getElementById("error").style.display = "block";
+        document.getElementById("noerror").style.display = "none";
+        document.getElementById("Nojob").style.display = "none";
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  showResults = ()=> {
-    if( this.state.keywords === "" || this.state.selectedLocation === ""){
-      return(
-        <>
-        <p style={{ marginLeft :"220px", fontWeight :"bold", marginBottom:"20px"}}>Enter your keyword and Select the location 
-        & Wait till we find you the jobs out there on the internet :)</p>
-        </>
-      )
-    }
-   
-  }
   render() {
     return (
       <>
@@ -122,9 +137,41 @@ class JobNearMe extends Component {
             </div>
           </div>
         </div>
-          
+
         <section class="job-detail section pt-5">
-        {this.showResults()}
+          <p
+            id="error"
+            style={{
+              display: "none",
+              marginLeft: "220px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
+            Please Enter both Keyword & location
+          </p>
+          <p
+            id="noerror"
+            style={{
+              display: "none",
+              marginLeft: "220px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
+            Loading...
+          </p>
+          <p
+            id="Nojob"
+            style={{
+              display: "none",
+              marginLeft: "220px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
+            No Jobs are Available at this time
+          </p>
           <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
@@ -148,7 +195,7 @@ class JobNearMe extends Component {
                             color: "#00468b",
                             fontSize: "18px",
                             marginBottom: "10px",
-                            fontWeight : "bold"
+                            fontWeight: "bold",
                           }}
                         >
                           {data.jobTitle}

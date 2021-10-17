@@ -15,50 +15,50 @@ class ViewProfile extends Component {
     role: "",
     skills: "",
     experience: [],
-    title : "",
-    companyS : "",
-    location : "",
-    headlineS : "",
-    description : "",
-    
+    title: "",
+    companyS: "",
+    location: "",
+    headlineS: "",
+    description: "",
+
     education: [],
-    institution : "",
-    degree : "",
-    startDate : "",
-    endDate : "",
+    institution: "",
+    degree: "",
+    startDate: "",
+    endDate: "",
     address: {},
     street: "",
     city: "",
     stateP: "",
     country: "",
     zipcode: "",
-    phone_number : "",
-    headlineR : "",
-    companyR : "",
-    updateBody: {}
+    phone_number: "",
+    headlineR: "",
+    companyR: "",
+    updateBody: {},
   };
   setLastname(e) {
-    this.state.updateBody.lastname = e.target.value
+    this.state.updateBody.lastname = e.target.value;
 
     this.setState({
       lastname: e.target.value,
     });
   }
   setFirstname(e) {
-    this.state.updateBody.firstname = e.target.value
+    this.state.updateBody.firstname = e.target.value;
     this.setState({
-      firstname : e.target.value
-    })
+      firstname: e.target.value,
+    });
   }
-  setSkills(e){
-    this.state.updateBody.skills = e.target.value
+  setSkills(e) {
+    this.state.updateBody.skills = e.target.value;
     this.setState({
-      skills : e.target.value
-    })
+      skills: e.target.value,
+    });
   }
-  
+
   // setRProfile() {
-    
+
   //   let prf = {
   //     street: this.state.street,
   //     city: this.state.city,
@@ -76,29 +76,28 @@ class ViewProfile extends Component {
   //   });
   // }
 
-  setPhoneNo(e){
-    this.state.updateBody.phone_number = e.target.value
+  setPhoneNo(e) {
+    this.state.updateBody.phone_number = e.target.value;
 
     this.setState({
-      phone_number : e.target.value
-    })
+      phone_number: e.target.value,
+    });
   }
 
-  setTagline(e){
-    this.state.updateBody.headlineR = e.target.value
+  setTagline(e) {
+    this.state.updateBody.headlineR = e.target.value;
 
     this.state({
-      headlineR : e.target.value
-    })
+      headlineR: e.target.value,
+    });
   }
-  setCompany(e){
-    this.state.updateBody.companyR = e.target.value
+  setCompany(e) {
+    this.state.updateBody.companyR = e.target.value;
 
     this.state({
-      companyR : e.target.value
-    })
+      companyR: e.target.value,
+    });
   }
-
 
   setStreet(e) {
     this.setState({
@@ -106,27 +105,23 @@ class ViewProfile extends Component {
     });
   }
   setCity(e) {
-
     this.setState({
       city: e.target.value,
     });
   }
 
   setPState(e) {
-
     this.setState({
       stateP: e.target.value,
     });
   }
 
   setCountry(e) {
-
     this.setState({
       country: e.target.value,
     });
   }
   setZipcode(e) {
-
     this.setState({
       zipcode: e.target.value,
     });
@@ -143,33 +138,63 @@ class ViewProfile extends Component {
         let results = await requests.getUser(this.state.id);
         let zipcode,city,state,country,street
         if (
-          results.data.roleDetails.firstname === null ||
-          results.data.roleDetails.firstname === undefined
+          results.data.roleDetails.firstname !== null ||
+          results.data.roleDetails.firstname !== undefined
         ) {
           this.setState({
             firstname: "User",
           });
+         
+          if (results.data.roleDetails.role === "seeker") {
+            this.setState({
+              firstname: results.data.roleDetails.firstname,
+              lastname: results.data.roleDetails.lastname,
+              email: results.data.roleDetails.email,
+              role: results.data.roleDetails.role,
+              skills: results.data.roleDetailsSpecified.skills,
+              experience: results.data.roleDetailsSpecified.experience,
+              education: results.data.roleDetailsSpecified.education,
+            });
+          } else if (results.data.roleDetails.role === "recruiter" && results.data.roleDetailsSpecified.address !== undefined) {
+            console.log("here as a recruiter")
+             
+            
+            let { zipcode, city, state, country, street } =
+            results.data.roleDetailsSpecified.address;
+            this.setState({
+              firstname: results.data.roleDetails.firstname,
+              lastname: results.data.roleDetails.lastname,
+              email: results.data.roleDetails.email,
+              role: results.data.roleDetails.role,
+              phone_number: results.data.roleDetailsSpecified.phone_number,
+              headline: results.data.roleDetailsSpecified.headline,
+              company: results.data.roleDetailsSpecified.company,
+              zipcode: zipcode,
+              city: city,
+              stateP: state,
+              country: country,
+              street: street,
+            });
+          }
+          else {
+            this.setState({
+              firstname: results.data.roleDetails.firstname,
+              lastname: results.data.roleDetails.lastname,
+              email: results.data.roleDetails.email,
+              role: results.data.roleDetails.role,
+              phone_number: results.data.roleDetailsSpecified.phone_number,
+              headline: results.data.roleDetailsSpecified.headline,
+              company: results.data.roleDetailsSpecified.company,
+              zipcode: zipcode,
+              city: city,
+              stateP: state,
+              country: country,
+              street: street,
+            });
+          }
         } else {
-            let {zipcode, city, state, country, street} = results.data.roleDetailsSpecified.address
-        
-          
-          this.setState({
-            firstname: results.data.roleDetails.firstname,
-            lastname: results.data.roleDetails.lastname,
-            email: results.data.roleDetails.email,
-            role: results.data.roleDetails.role,
-            skills: results.data.roleDetailsSpecified.skills,
-            experience: results.data.roleDetailsSpecified.experience,
-            education: results.data.roleDetailsSpecified.education,
-            phone_number: results.data.roleDetailsSpecified.phone_number,
-            headline: results.data.roleDetailsSpecified.headline,
-            company: results.data.roleDetailsSpecified.company,
-            zipcode: zipcode,
-            city:city, 
-            stateP:state, 
-            country:country, 
-            street:street
-          });
+          console.log("im in else block of 2nd IF")
+          // let {zipcode, city, state, country, street} = results.data.roleDetailsSpecified.address
         }
       } else {
         console.log("its null");
@@ -200,40 +225,49 @@ class ViewProfile extends Component {
   updateProfile = async () => {
     let address = {
       street: this.state.street,
-      city : this.state.city,
-      state : this.state.stateP,
-      zipcode : this.state.zipcode,
-      country : this.state.country
+      city: this.state.city,
+      state: this.state.stateP,
+      zipcode: this.state.zipcode,
+      country: this.state.country,
+    };
+    this.state.updateBody.address = address;
+    console.log(this.state.updateBody);
 
-    }
-    this.state.updateBody.address = address
-    console.log(this.state.updateBody)
-
-      console.log("here in update proifle starting")
-      try {
-        if (
-          this.state.id !== null ||
-          this.state.token !== null ||
-          this.state.id !== undefined ||
-          this.state.token !== undefined
-        ) {
-          let resultsAsRole = await requests.updateUserAsRole(this.state.id,this.state.updateBody);
-          let resultsAsMain = await requests.updateUser(this.state.id,this.state.updateBody);
-            if (this.state.role === "recruiter") {
-              console.log("here in update profile function of recruiter")
-              console.log("main results lastname, ",resultsAsRole.data.updatedAsRole.phone_number)
-
-          } else if (this.state.role === "seeker") {
-            console.log("here in update profile function of seeker")
-            console.log("main results lastname, ",resultsAsMain.data.updatedAsUser.lastname)
-          }
-        } else {
-          console.log("its no role");
+    console.log("here in update proifle starting");
+    try {
+      if (
+        this.state.id !== null ||
+        this.state.token !== null ||
+        this.state.id !== undefined ||
+        this.state.token !== undefined
+      ) {
+        let resultsAsRole = await requests.updateUserAsRole(
+          this.state.id,
+          this.state.updateBody
+        );
+        let resultsAsMain = await requests.updateUser(
+          this.state.id,
+          this.state.updateBody
+        );
+        if (this.state.role === "recruiter") {
+          console.log("here in update profile function of recruiter");
+          console.log(
+            "main results lastname, ",
+            resultsAsRole.data.updatedAsRole.phone_number
+          );
+        } else if (this.state.role === "seeker") {
+          console.log("here in update profile function of seeker");
+          console.log(
+            "main results lastname, ",
+            resultsAsMain.data.updatedAsUser.lastname
+          );
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        console.log("its no role");
       }
-   
+    } catch (error) {
+      console.log(error);
+    }
   };
   loggedIn = () => {
     if (
@@ -244,8 +278,7 @@ class ViewProfile extends Component {
       this.state.role !== null ||
       this.state.role !== undefined
     ) {
-      
-       if (this.state.role === "seeker") {
+      if (this.state.role === "seeker") {
         return (
           <>
             <section class="job-detail section pt-5">
@@ -367,44 +400,7 @@ class ViewProfile extends Component {
                             />
                           </div>
                         </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label
-                              style={{ color: "#000000" }}
-                              class="control-label"
-                            >
-                              Education
-                            </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              style={{
-                                border: "1px solid #55BC7E",
-                                background: "none",
-                              }}
-                              placeholder={this.state.education}
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label
-                              style={{ color: "#000000" }}
-                              class="control-label"
-                            >
-                              Experience
-                            </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              style={{
-                                border: "1px solid #55BC7E",
-                                background: "none",
-                              }}
-                              placeholder={this.state.experience}
-                            />
-                          </div>
-                        </div>
+                       
                       </div>
                       <div class="col-12 text-center mt-4">
                         <Link
@@ -590,123 +586,122 @@ class ViewProfile extends Component {
                           </div>
                         </div>
 
-                          {/* {this.state.address.map((data, fields) => {
+                        {/* {this.state.address.map((data, fields) => {
                             return (
                               <> */}
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label
-                                      style={{ color: "#000000" }}
-                                      class="control-label"
-                                    >
-                                      Street
-                                    </label>
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      style={{
-                                        border: "1px solid #55BC7E",
-                                        background: "none",
-                                      }}
-                                      placeholder={this.state.street}
-                                      onChange={(e) => {
-                                        this.setStreet(e);
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label
-                                      style={{ color: "#000000" }}
-                                      class="control-label"
-                                    >
-                                      City
-                                    </label>
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      style={{
-                                        border: "1px solid #55BC7E",
-                                        background: "none",
-                                      }}
-                                      placeholder={this.state.city}
-                                      onChange={(e) => {
-                                        this.setCity(e);
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label
-                                      style={{ color: "#000000" }}
-                                      class="control-label"
-                                    >
-                                      State
-                                    </label>
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      style={{
-                                        border: "1px solid #55BC7E",
-                                        background: "none",
-                                      }}
-                                      placeholder={this.state.stateP}
-                                      onChange={(e) => {
-                                        this.setPState(e);
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label
-                                      style={{ color: "#000000" }}
-                                      class="control-label"
-                                    >
-                                      Country
-                                    </label>
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      style={{
-                                        border: "1px solid #55BC7E",
-                                        background: "none",
-                                      }}
-                                      placeholder={this.state.country}
-                                      onChange={(e) => {
-                                        this.setCountry(e);
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label
-                                      style={{ color: "#000000" }}
-                                      class="control-label"
-                                    >
-                                      ZipCode
-                                    </label>
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      style={{
-                                        border: "1px solid #55BC7E",
-                                        background: "none",
-                                      }}
-                                      placeholder={this.state.zipcode}
-                                      onChange={(e) => {
-                                        this.setZipcode(e);
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                              {/* </>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label
+                              style={{ color: "#000000" }}
+                              class="control-label"
+                            >
+                              Street
+                            </label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              style={{
+                                border: "1px solid #55BC7E",
+                                background: "none",
+                              }}
+                              placeholder={this.state.street}
+                              onChange={(e) => {
+                                this.setStreet(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label
+                              style={{ color: "#000000" }}
+                              class="control-label"
+                            >
+                              City
+                            </label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              style={{
+                                border: "1px solid #55BC7E",
+                                background: "none",
+                              }}
+                              placeholder={this.state.city}
+                              onChange={(e) => {
+                                this.setCity(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label
+                              style={{ color: "#000000" }}
+                              class="control-label"
+                            >
+                              State
+                            </label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              style={{
+                                border: "1px solid #55BC7E",
+                                background: "none",
+                              }}
+                              placeholder={this.state.stateP}
+                              onChange={(e) => {
+                                this.setPState(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label
+                              style={{ color: "#000000" }}
+                              class="control-label"
+                            >
+                              Country
+                            </label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              style={{
+                                border: "1px solid #55BC7E",
+                                background: "none",
+                              }}
+                              placeholder={this.state.country}
+                              onChange={(e) => {
+                                this.setCountry(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label
+                              style={{ color: "#000000" }}
+                              class="control-label"
+                            >
+                              ZipCode
+                            </label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              style={{
+                                border: "1px solid #55BC7E",
+                                background: "none",
+                              }}
+                              placeholder={this.state.zipcode}
+                              onChange={(e) => {
+                                this.setZipcode(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        {/* </>
                             );
                           })} */}
-                        
                       </div>
                       <div class="col-12 text-center mt-4">
                         <Link
@@ -726,13 +721,8 @@ class ViewProfile extends Component {
             </section>
           </>
         );
-      }
-      else {
-        return(
-          <>
-  
-          </>
-        )
+      } else {
+        return <></>;
       }
     }
   };

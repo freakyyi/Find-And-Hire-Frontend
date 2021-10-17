@@ -42,6 +42,7 @@ let loginUser = async (email, password) => {
         password: password,
       }
     );
+    console.log("login respinse"+ response.data)
     return response;
   } catch (error) {
     console.log(error);
@@ -57,7 +58,7 @@ let getUser = async (id) => {
         },
       }
     );
-    console.log("getting user :" , response);
+    console.log("getting user from getUser API :" , response);
 
     return response;
   } catch (error) {
@@ -135,10 +136,15 @@ let postJob = async (
         },
       }
     );
+    if(response.data.errors === null) {
+      console.log("Error occured in Post Job Form");
+    }
+    else {
+      console.log("response of post jobs : ", response);
+      return response.data;
+    }
 
-    console.log("response of post jobs : ", response);
 
-    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -194,11 +200,24 @@ let createCV = async (
         },
       }
     );
-    console.log("response : ", response);
+    
+    if(response.data.errors !== null) {
+      console.log("Error occured in CV Form while submission")
+      return
+    }
+    else if(response.status === "403" || response.status === 403 ) {
+      console.log("You already have a CV")
+      return
+    }
+      console.log("CV Response : ", response);
+      return response.data;
+    
+    
 
-    return response.data;
+    // console.log("response when there is error in anywhere :" ,response.data)
   } catch (error) {
-    console.log(error);
+    console.log("Error occured in CV " + error);
+    
   }
 
 };
@@ -212,9 +231,17 @@ let getCV = async (id) => {
         },
       }
     );
-    console.log("getting CV :" , response);
-
-    return response;
+    // if(response.data.errors !== null) {
+    //   console.log("CV is already Present")
+    // }
+    // else {
+    //   console.log("CV Response : ", response);
+    //   return response.data;
+    // }
+    console.log("CV Response : ", response);
+    return response.data;
+    
+    
   } catch (error) {
     console.log(error);
   }

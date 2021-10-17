@@ -524,19 +524,7 @@ class Category extends React.Component {
                         className="row"
                         style={{ borderBottom: "1px solid #344863" }}
                       >
-                        <div className="ml-3">
-                          <span>
-                            <img
-                              style={{
-                                borderRadius: "100%",
-                                height: "42px",
-                                width: "42px",
-                              }}
-                              src="assets/img/blog/blog1.jpg"
-                              alt=""
-                            />
-                          </span>
-                        </div>
+                      
                         <div
                           className="col-md-8"
                           style={{ marginRight: "120px" }}
