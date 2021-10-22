@@ -240,11 +240,14 @@ class Resume extends Component {
           this.state.skills,
           this.state.summary
         );
+        
         if (
-          results !== null
+          results === null || results === undefined
           
         ) { 
-          window.location.href = "/cv_preview";
+          document.getElementById("error").style.display = "block";
+          console.log("Please fill in the required details",results);
+         
 
         }
         else if (results.status === "403"){
@@ -254,8 +257,7 @@ class Resume extends Component {
         //   console.log("you already have a CV")
         // }
         else {
-           document.getElementById("error").style.display = "block";
-           console.log("Please fill in the required details");
+          window.location.href = "/cv_preview";
           //  console.log("results when there was no submission " ,results)
         }
         

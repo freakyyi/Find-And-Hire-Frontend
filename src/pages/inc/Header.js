@@ -166,6 +166,18 @@ class header extends Component {
             >
               View Applications
             </Link>
+            
+          </li>
+          <li class="nav-item dropdown">
+            <Link
+              class="nav-link dropdown-toggle"
+              to="error"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              View Posted Jobs
+            </Link>
+            
           </li>
           <div class="dropdown">
             <li class="button-group">

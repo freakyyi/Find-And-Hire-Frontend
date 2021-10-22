@@ -119,10 +119,18 @@ class JobPostForm extends Component {
   postJob = async () => {
     try {
       if (
-        this.state.company !== "" ||
-        this.state.category !== "" ||
-        this.state.title !== "" ||
-        this.state.selectedLocation !== ""
+        this.state.selectedLocation !== null ||
+        this.state.selectedCategory !== null||
+        this.state.selectedHires!== null||
+        this.state.company!== null||
+        this.state.title!== null||
+        this.state.jobPrimer!== null||
+        this.state.contractType!== null||
+        this.state.lowerSalary!== null||
+        this.state.upperSalary!== null||
+        this.state.description!== null||
+        this.state.skills!== null
+
       ) {
         console.log("im in post job");
         let skills =this.state.skills.split(',')
@@ -142,21 +150,22 @@ class JobPostForm extends Component {
         );
       
         if (
-          results !== null
+          results === null || results === undefined
           
         ) { 
-          window.location.href = "/category";
+          document.getElementById("error").style.display = "block";
+           console.log("Please fill in the required details" , results);
+          
         }
         else {
-          document.getElementById("error").style.display = "block";
-           console.log("Please fill in the required details");
+          window.location.href = "/category";
                  
         }
         
       
 
       } else {
-        return console.log("Please fill in the required details");
+        console.log("Please fill in the required details, this is the major if");
         // <>
         // <h4>Please fill in the required details</h4>
         // </>

@@ -136,11 +136,13 @@ let postJob = async (
         },
       }
     );
-    if(response.data.errors === null) {
+    if(response.data._id === null || response.data._id === undefined) {
       console.log("Error occured in Post Job Form");
+      console.log("Errors:  " ,response)
+      return
     }
     else {
-      console.log("response of post jobs : ", response);
+      console.log("response of post jobs : ", response.data);
       return response.data;
     }
 
@@ -201,7 +203,7 @@ let createCV = async (
       }
     );
     
-    if(response.data.errors !== null) {
+    if(response.data._id === null || response.data._id === undefined) {
       console.log("Error occured in CV Form while submission")
       return
     }
@@ -209,9 +211,12 @@ let createCV = async (
       console.log("You already have a CV")
       return
     }
+    else {
       console.log("CV Response : ", response);
       return response.data;
     
+    }
+     
     
 
     // console.log("response when there is error in anywhere :" ,response.data)

@@ -17,8 +17,8 @@ class Category extends React.Component {
     selectedLocation: "",
   };
 
-  setKeywords(e) {
 
+  setKeywords(e) {
     this.setState({
       keywords: e.target.value,
     });
@@ -62,7 +62,7 @@ class Category extends React.Component {
           jobs: results,
           filteredJobs: results,
         });
-        console.log("jaabs",this.state.filteredJobs)
+        // console.log("Filtered Jobs",this.state.filteredJobs)
       } else if (
         this.state.keywords !== "" ||
         this.state.selectedLocation !== "" ||
@@ -80,24 +80,30 @@ class Category extends React.Component {
   }
   filterResults =() =>  {
     
+   
     let keywords = this.state.keywords
-    var newArray = this.state.filteredJobs.filter(function (el) {
-      console.log("el is : ",el.title)
-      console.log(el.title === keywords)
-      return el.title === keywords
-      // if (el.title === keywords) {
-      //   return el
-      // }else{
-      //   return
-      // }
+    let location = this.state.selectedLocation
+    var newArray = this.state.jobs.filter((el) => {
+      if(keywords === "" && location === ""){
+        return this.state.filteredJobs
+      }
+      else if(el.title.toLowerCase().includes(keywords.toLowerCase()) && el.selectedLocation.toLowerCase().includes(location.toLowerCase()) ){
+        return this.state.filteredJobs
+      }
+      
+     
       
       
-    });
+    })
     this.setState({
-      filteredjobs: newArray,
+      filteredJobs: newArray,
     }); 
+    
+   
 
-    console.log("filteredd",newArray)
+    console.log("Filtered After Matching New Array",this.state.filteredJobs)
+    
+    // console.log("Filtereb Jobs",filteredJobs)
   }
 
 
