@@ -34,14 +34,18 @@ class JobNearMe extends Component {
           this.state.selectedLocation
         );
 
-        if (results === null || results === "" || results === undefined || results.length === 0) {
-          console.log("")
+        if (
+          results === null ||
+          results === "" ||
+          results === undefined ||
+          results.length === 0
+        ) {
+          console.log("");
           document.getElementById("Nojob").style.display = "block";
           document.getElementById("noerror").style.display = "none";
           document.getElementById("error").style.display = "none";
-        }
-        else {
-          console.log('Here after getting a result')
+        } else {
+          console.log("Here after getting a result");
           this.setState({
             jobs: results,
           });
@@ -49,14 +53,11 @@ class JobNearMe extends Component {
           document.getElementById("Nojob").style.display = "none";
           document.getElementById("error").style.display = "none";
         }
-       
-
-        
       } else if (
         this.state.keywords === "" ||
         this.state.keywords === null ||
         this.state.selectedLocation === "" ||
-        this.state.selectedLocation === null 
+        this.state.selectedLocation === null
       ) {
         console.log("im in else if");
         document.getElementById("error").style.display = "block";
@@ -179,7 +180,10 @@ class JobNearMe extends Component {
                 return (
                   <div
                     class="content-area mb-5"
-                    style={{ boxShadow: "0px 10px 22px #00000029" }}
+                    style={{
+                      boxShadow: "0px 10px 22px #00000029",
+                      borderRadius: 20,
+                    }}
                   >
                     <div
                       class="row"
@@ -192,7 +196,7 @@ class JobNearMe extends Component {
                           rel="noreferrer"
                           class="mb-0"
                           style={{
-                            color: "#00468b",
+                            color: "#55BC7E",
                             fontSize: "18px",
                             marginBottom: "10px",
                             fontWeight: "bold",
@@ -200,17 +204,29 @@ class JobNearMe extends Component {
                         >
                           {data.jobTitle}
                         </a>
+                        <div >
+                          <label
+                            for=""
+                            style={{ color: "#000000", marginBottom: "10px" }}
+                          >
+                            {data.date}
+                          </label>
+                        </div>
                       </div>
 
-                      <div class="col-md-2 ">
+                      {/* <div class="col-md-2 ">
                         <label for="" style={{ color: "#000000" }}>
                           {data.date}
                         </label>
-                      </div>
-                      <div class="col-md-2 text-right">
+                      </div> */}
+                      <div class="col-md-4 text-right">
                         <p
                           class="mb-0"
-                          style={{ color: "#37383D", fontSize: "16px" }}
+                          style={{
+                            color: "#37383D",
+                            fontSize: "16px",
+                            fontWeight: "bold",
+                          }}
                         >
                           Salary: {data.salary}
                         </p>
@@ -230,8 +246,21 @@ class JobNearMe extends Component {
                           Company:{" "}
                         </p>
                       </div>
-                      <div>
-                        <p style={{ color: "#000000", fontSize: "13px" }}>
+                      <div
+                        style={{
+                          backgroundColor: "#55BC7E",
+                          height: 30,
+                          borderRadius: 5,
+                        }}
+                      >
+                        <p
+                          style={{
+                            color: "white",
+                            fontSize: "13px",
+                            textAlign: "center",
+                            margin: "5px 10px 10px 5px",
+                          }}
+                        >
                           {data.company}
                         </p>
                       </div>
@@ -242,8 +271,17 @@ class JobNearMe extends Component {
                           Location:{" "}
                         </p>
                       </div>
-                      <div>
-                        <p style={{ color: "#000000", fontSize: "13px" }}>
+                      <div  style={{
+                          backgroundColor: "#55BC7E",
+                          height: 30,
+                          borderRadius: 5,
+                        }}> 
+                        <p  style={{
+                            color: "white",
+                            fontSize: "13px",
+                            textAlign: "center",
+                            margin: "5px 10px 10px 5px",
+                          }}>
                           {data.location}
                         </p>
                       </div>
