@@ -98,8 +98,8 @@ class footer extends Component {
                   <div class="site-info text-center">
                     <p>
                       Designed and Developed by{" "}
-                      <Link to="/ttps://uideck.com/" rel="nofollow">
-                        Shaheer And Faheem
+                      <Link to="/Devs" rel="nofollow">
+                        Shaheer Babar & Syed Faheem Shah ( faheemshah693@gmail.com )
                       </Link>
                     </p>
                   </div>
