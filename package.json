@@ -38,6 +38,10 @@
     "eject": "react-scripts eject",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Hire-And-Find-Frontend-main && npm run build --prefix Hire-And-Find-Frontend-main"
   },
+  "engines": {
+    
+    "node": "16.0.0"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
