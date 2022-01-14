@@ -35,7 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Hire-And-Find-Frontend-main && npm run build --prefix Hire-And-Find-Frontend-main"
   },
   "eslintConfig": {
     "extends": [
